@@ -1,8 +1,15 @@
-function storeTask(project) {
-    localStorage.setItem('projectname', 'an array of task objects')
+export { storeTask, storeProject }
+
+function storeTask(newTask) {
+    const selectedTitle = document.querySelector('.selected').textContent;
+    const x = JSON.parse(localStorage.getItem(selectedTitle));
     // lookup anything in local storage that match project name
     // pull data out and append them to dom
     // todo: figure out how localstorage works again
+}
+
+function storeProject(newP) {
+    
 }
 
 // todo:

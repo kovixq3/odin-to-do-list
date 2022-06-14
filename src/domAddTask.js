@@ -1,4 +1,5 @@
 import taskFactory from "./taskFactory";
+import { storeTask } from "./storage";
 import { formatDistanceToNow } from 'date-fns'
 export { createAddTaskBtn, createTask }
 
@@ -38,7 +39,8 @@ function addTask() {
 
     function submittingTask() {
         const newTask = taskFactory(title.value, date.valueAsDate)
-        createTask(newTask.title, newTask.dueDate)
+        createTask(newTask)
+        storeTask(newTask)
         cancelAddingTask()
     }
 }
@@ -55,23 +57,23 @@ function createAddTaskBtn() {
     return addTaskButton
 }
 
-function createTask(title, date) {
+function createTask(newTask) {
     const task = document.createElement('div');
-    task.classList.add('selected-project__task')
-    const taskCheck = document.createElement('input')
-    const taskTitle = document.createElement('div')
-    const taskDate = document.createElement('div')
-    taskCheck.classList.add('task--checkbox')
-    taskCheck.setAttribute('type', 'checkbox')
-    taskTitle.classList.add('task--title')
-    taskTitle.textContent = title
-    taskDate.classList.add('task--date')
-    taskDate.textContent = formatDistanceToNow(date, {addSuffix: true})
+    task.classList.add('selected-project__task');
+    const taskCheck = document.createElement('input');
+    const taskTitle = document.createElement('div');
+    const taskDate = document.createElement('div');
+    taskCheck.classList.add('task--checkbox');
+    taskCheck.setAttribute('type', 'checkbox');
+    taskTitle.classList.add('task--title');
+    taskTitle.textContent = newTask.title;
+    taskDate.classList.add('task--date');
+    taskDate.textContent = formatDistanceToNow(newTask.dueDate, {addSuffix: true});
 
-    task.appendChild(taskCheck)
-    task.appendChild(taskTitle)
-    task.appendChild(taskDate)
+    task.appendChild(taskCheck);
+    task.appendChild(taskTitle);
+    task.appendChild(taskDate);
 
-    const ctner = document.querySelector('.selected-project__tasks-ctner')
-    ctner.appendChild(task)
+    const ctner = document.querySelector('.selected-project__tasks-ctner');
+    ctner.appendChild(task);
 }

@@ -1,4 +1,4 @@
-import createTask from "./domAddTask.js";
+import { createTask } from "./domAddTask.js";
 export { createAddProjectBtn, createProject }
 
 function addProject() {
@@ -62,13 +62,11 @@ function createProject(title) {
 
     domItem.addEventListener('click', (e) => {
         addSelectedClass(e.target)
-        updateTaskDisplay(e.target)
+        updateTaskSectionDisplay(e.target)
     })
 
     
     // update selected-project--title and selected-project__tasks-ctner
-    // fire selected title name to a function, and have it grab data by that name?
-    // 
 
     function addSelectedClass(i) {
         const projectsCtner = document.querySelector('.projects-ctner')
@@ -77,15 +75,14 @@ function createProject(title) {
         i.classList.add('selected')
     }
 
-    function updateTaskDisplay(i) {
-        const arr = JSON.parse(localStorage.getItem(i.textContent))
-        arr.forEach((e) => console.log(e))
-
+    function updateTaskSectionDisplay(i) {
+        // const arr = JSON.parse(localStorage.getItem(i.textContent))
+        // arr.forEach((e) => {
+        //     createTask(e.title, e.dueDate)
+        // })
 
         const selectedProjectTitle = document.querySelector('.selected-project__title')
         const selectedProjectTasksCtner = document.querySelector('.selected-project__tasks-ctner')
-
-
 
 
         console.log(selectedProjectTitle)
