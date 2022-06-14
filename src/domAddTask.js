@@ -1,6 +1,6 @@
 import taskFactory from "./taskFactory";
 import { formatDistanceToNow } from 'date-fns'
-export { createAddTaskBtn }
+export { createAddTaskBtn, createTask }
 
 function addTask() {
     document.querySelector('.add-task--btn').remove()
@@ -38,7 +38,7 @@ function addTask() {
 
     function submittingTask() {
         const newTask = taskFactory(title.value, date.valueAsDate)
-        createTask(newTask.title, formatDistanceToNow(newTask.dueDate, {addSuffix: true}))
+        createTask(newTask.title, newTask.dueDate)
         cancelAddingTask()
     }
 }
@@ -66,7 +66,7 @@ function createTask(title, date) {
     taskTitle.classList.add('task--title')
     taskTitle.textContent = title
     taskDate.classList.add('task--date')
-    taskDate.textContent = date
+    taskDate.textContent = formatDistanceToNow(date, {addSuffix: true})
 
     task.appendChild(taskCheck)
     task.appendChild(taskTitle)

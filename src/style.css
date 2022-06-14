@@ -63,6 +63,9 @@ table {
 	background-color: var(--semi-transparent-white)
 }
 
+.selected {
+	background-color: rgba(255, 255, 255, 0.09);
+}
 
 .main {
     height: 100vh;
@@ -83,7 +86,6 @@ table {
 
 .projects-ctner .item {
 	cursor: pointer;
-	background-color: rgba(255, 255, 255, 0.09);
 	border-radius: .33rem;
 	font-size: 1.5rem;
 }
@@ -96,7 +98,7 @@ table {
 	flex-direction: column;
 }
 
-.selected-project--title {
+.selected-project__title {
 	font-size: 4rem;
 }
 

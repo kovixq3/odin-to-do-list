@@ -1,5 +1,5 @@
-import projectFactory from "./projectFactory";
-export { createAddProjectBtn }
+import createTask from "./domAddTask.js";
+export { createAddProjectBtn, createProject }
 
 function addProject() {
     document.querySelector('.add-project--btn').remove()
@@ -35,8 +35,10 @@ function addProject() {
     }
 
     function submittingProject() {
-        const newProject = projectFactory(input.value)
-        createProject(newProject.title)
+        if (input.value) {
+            const projectsCtner = document.querySelector('.projects-ctner')
+            projectsCtner.appendChild(createProject(input.value))
+        }
         cancelAddingProject()
     }
 }
@@ -50,15 +52,45 @@ function createAddProjectBtn() {
     addProjectBtnText.textContent = 'Add Project';
     addProjectBtn.appendChild(addProjectBtnText);
 
-    return addProjectBtn
+    return addProjectBtn;
 }
 
-function createProject(title) {
-    const ctner = document.querySelector('.projects-ctner')
+function createProject(title) { 
+    const domItem = document.createElement('div');
+    domItem.classList.add('item');
+    domItem.textContent = title;
 
-    const projectsItem = document.createElement('div')
-    projectsItem.classList.add('item')
-    projectsItem.textContent = title
+    domItem.addEventListener('click', (e) => {
+        addSelectedClass(e.target)
+        updateTaskDisplay(e.target)
+    })
 
-    ctner.appendChild(projectsItem)
+    
+    // update selected-project--title and selected-project__tasks-ctner
+    // fire selected title name to a function, and have it grab data by that name?
+    // 
+
+    function addSelectedClass(i) {
+        const projectsCtner = document.querySelector('.projects-ctner')
+        const childrenArr = [...projectsCtner.children]
+        childrenArr.forEach(e => e.classList.remove('selected'));
+        i.classList.add('selected')
+    }
+
+    function updateTaskDisplay(i) {
+        const arr = JSON.parse(localStorage.getItem(i.textContent))
+        arr.forEach((e) => console.log(e))
+
+
+        const selectedProjectTitle = document.querySelector('.selected-project__title')
+        const selectedProjectTasksCtner = document.querySelector('.selected-project__tasks-ctner')
+
+
+
+
+        console.log(selectedProjectTitle)
+
+    }
+
+    return domItem;
 }

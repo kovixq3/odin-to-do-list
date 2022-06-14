@@ -1,5 +1,5 @@
 import { createAddTaskBtn } from "./domAddTask"
-import { createAddProjectBtn } from "./domAddProject"
+import { createAddProjectBtn, createProject } from "./domAddProject"
 
 export function onLoad() {
     const body = document.querySelector('body');
@@ -17,19 +17,17 @@ export function onLoad() {
 
 
     // projects section
+    // HUGE NOTE
+    // should do something like populate everything in local storage and then just keep repopulate every event
     const projectsCtner = document.createElement('div')
     projectsCtner.classList.add('projects-ctner')
-
-    const projectsItem = document.createElement('div')
-    projectsItem.classList.add('item')
-    projectsItem.textContent = 'Example Project'
 
     const addProjectBtnCtner = document.createElement('div')
     addProjectBtnCtner.classList.add('add-project-ctner')
     addProjectBtnCtner.appendChild(createAddProjectBtn())
 
+    projectsCtner.appendChild(createProject('Example'))
 
-    projectsCtner.appendChild(projectsItem)
 
     projectSection.appendChild(projectSectionHeader)
     projectSection.appendChild(border)
@@ -37,16 +35,12 @@ export function onLoad() {
     projectSection.appendChild(addProjectBtnCtner)
 
 
-
     // task section
     const taskSection = document.createElement('div');
     taskSection.classList.add('task-section');
 
-    const borderTwo = document.createElement('div')
-    borderTwo.classList.add('border')
-
     const selectedProjectTitle = document.createElement('div');
-    selectedProjectTitle.classList.add('selected-project--title')
+    selectedProjectTitle.classList.add('selected-project__title')
     // need to modify to make this title sync with selected project
     selectedProjectTitle.textContent = 'Example Project'
 
@@ -58,7 +52,7 @@ export function onLoad() {
     addTaskCtner.appendChild(createAddTaskBtn())
 
     taskSection.appendChild(selectedProjectTitle)
-    taskSection.appendChild(borderTwo)
+    taskSection.appendChild(border.cloneNode(false))
     taskSection.appendChild(selectedProjectTasksCtner)
     taskSection.appendChild(addTaskCtner)
 
