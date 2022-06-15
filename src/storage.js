@@ -1,18 +1,17 @@
 export { storeTask, storeProject }
 
-function storeTask(newTask) {
-    const selectedTitle = document.querySelector('.selected').textContent;
-    const x = JSON.parse(localStorage.getItem(selectedTitle));
-    // lookup anything in local storage that match project name
-    // pull data out and append them to dom
-    // todo: figure out how localstorage works again
+function storeTask(newT) {
+    for (let index = 0; index < localStorage.length; index++) {
+        const e = localStorage.key(index)
+        const selectedTitle = document.querySelector('.selected').textContent;
+        if (JSON.parse(e).title === selectedTitle) {
+            const arr = JSON.parse(localStorage.getItem(e))
+            arr.push(newT)
+            localStorage.setItem(e, JSON.stringify(arr))
+        }
+    }
 }
 
 function storeProject(newP) {
-    
+    localStorage.setItem(JSON.stringify(newP), JSON.stringify([]))
 }
-
-// todo:
-// 1. figure out how to put them in localstorage
-// 2. have a event listener to click in project selection list -> grab things in local storage and put them on dom
-// 3. 

@@ -39,8 +39,7 @@ function addTask() {
 
     function submittingTask() {
         const newTask = taskFactory(title.value, date.valueAsDate)
-        createTask(newTask)
-        storeTask(newTask)
+        createTask(newTask, false)
         cancelAddingTask()
     }
 }
@@ -57,7 +56,11 @@ function createAddTaskBtn() {
     return addTaskButton
 }
 
-function createTask(newTask) {
+function createTask(newTask, domOnly) {
+    // if this is NOT called for creating dom element only, then store task
+    if (domOnly !== true) storeTask(newTask)
+
+
     const task = document.createElement('div');
     task.classList.add('selected-project__task');
     const taskCheck = document.createElement('input');

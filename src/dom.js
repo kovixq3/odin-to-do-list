@@ -17,8 +17,6 @@ export function onLoad() {
 
 
     // projects section
-    // HUGE NOTE
-    // should do something like populate everything in local storage and then just keep repopulate every event
     const projectsCtner = document.createElement('div')
     projectsCtner.classList.add('projects-ctner')
 
@@ -26,7 +24,13 @@ export function onLoad() {
     addProjectBtnCtner.classList.add('add-project-ctner')
     addProjectBtnCtner.appendChild(createAddProjectBtn())
 
-    projectsCtner.appendChild(createProject('Example'))
+
+    // loop through projects in local storage and append them to dom
+    for (let index = 0; index < localStorage.length; index++) {
+        let item = JSON.parse(localStorage.key(index))
+        let domItem = createProject(item)
+        projectsCtner.appendChild(domItem)
+    }
 
 
     projectSection.appendChild(projectSectionHeader)
@@ -40,24 +44,22 @@ export function onLoad() {
     taskSection.classList.add('task-section');
 
     const selectedProjectTitle = document.createElement('div');
-    selectedProjectTitle.classList.add('selected-project__title')
-    // need to modify to make this title sync with selected project
-    selectedProjectTitle.textContent = 'Example Project'
+    selectedProjectTitle.classList.add('selected-project__title');
 
     const selectedProjectTasksCtner = document.createElement('div');
-    selectedProjectTasksCtner.classList.add('selected-project__tasks-ctner')
+    selectedProjectTasksCtner.classList.add('selected-project__tasks-ctner');
 
-    const addTaskCtner = document.createElement('div')
-    addTaskCtner.classList.add('add-task-ctner')
-    addTaskCtner.appendChild(createAddTaskBtn())
+    const addTaskCtner = document.createElement('div');
+    addTaskCtner.classList.add('add-task-ctner');
+    addTaskCtner.appendChild(createAddTaskBtn());
 
-    taskSection.appendChild(selectedProjectTitle)
-    taskSection.appendChild(border.cloneNode(false))
-    taskSection.appendChild(selectedProjectTasksCtner)
-    taskSection.appendChild(addTaskCtner)
+    taskSection.appendChild(selectedProjectTitle);
+    taskSection.appendChild(border.cloneNode(false));
+    taskSection.appendChild(selectedProjectTasksCtner);
+    taskSection.appendChild(addTaskCtner);
 
 
-    main.appendChild(projectSection)
-    main.appendChild(taskSection)
+    main.appendChild(projectSection);
+    main.appendChild(taskSection);
     body.appendChild(main);
 }

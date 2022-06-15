@@ -1,4 +1,6 @@
 import { createTask } from "./domAddTask.js";
+import projectFactory from "./projectFactory.js";
+import { storeProject } from "./storage.js";
 export { createAddProjectBtn, createProject }
 
 function addProject() {
@@ -37,7 +39,8 @@ function addProject() {
     function submittingProject() {
         if (input.value) {
             const projectsCtner = document.querySelector('.projects-ctner')
-            projectsCtner.appendChild(createProject(input.value))
+            const newProject = projectFactory(input.value)
+            projectsCtner.appendChild(createProject(newProject))
         }
         cancelAddingProject()
     }
@@ -55,18 +58,20 @@ function createAddProjectBtn() {
     return addProjectBtn;
 }
 
-function createProject(title) { 
+function createProject(newProject) {
+    if (!localStorage.getItem(newProject.title)) storeProject(newProject)
+
+
     const domItem = document.createElement('div');
     domItem.classList.add('item');
-    domItem.textContent = title;
+    domItem.textContent = newProject.title;
 
     domItem.addEventListener('click', (e) => {
         addSelectedClass(e.target)
         updateTaskSectionDisplay(e.target)
     })
 
-    
-    // update selected-project--title and selected-project__tasks-ctner
+    // update selected-project__tasks-ctner
 
     function addSelectedClass(i) {
         const projectsCtner = document.querySelector('.projects-ctner')
@@ -76,16 +81,14 @@ function createProject(title) {
     }
 
     function updateTaskSectionDisplay(i) {
+        // loop through local storage looking for a specific project name (i.textContent)
         // const arr = JSON.parse(localStorage.getItem(i.textContent))
-        // arr.forEach((e) => {
-        //     createTask(e.title, e.dueDate)
-        // })
+        // arr.forEach(e => createTask(e, true))
 
         const selectedProjectTitle = document.querySelector('.selected-project__title')
+        selectedProjectTitle.textContent = i.textContent
+
         const selectedProjectTasksCtner = document.querySelector('.selected-project__tasks-ctner')
-
-
-        console.log(selectedProjectTitle)
 
     }
 
