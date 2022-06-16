@@ -1,17 +1,19 @@
-export { storeTask, storeProject }
+export { taskStorage, storeProject }
 
-function storeTask(newT) {
-    for (let index = 0; index < localStorage.length; index++) {
-        const e = localStorage.key(index)
-        const selectedTitle = document.querySelector('.selected').textContent;
-        if (JSON.parse(e).title === selectedTitle) {
-            const arr = JSON.parse(localStorage.getItem(e))
-            arr.push(newT)
-            localStorage.setItem(e, JSON.stringify(arr))
-        }
+function taskStorage(newTask, toReplaceTitle) {
+    const selectedTitle = document.querySelector('.selected').textContent;
+    const tasks = JSON.parse(localStorage.getItem(selectedTitle)).tasks;
+    const description = JSON.parse(localStorage.getItem(selectedTitle)).description
+
+    if (toReplaceTitle) {
+        tasks[tasks.findIndex((e) => e.title === toReplaceTitle)] = newTask
+    } else {
+        tasks.push(newTask)
     }
+    
+    localStorage.setItem(selectedTitle, JSON.stringify({tasks, description}))
 }
 
 function storeProject(newP) {
-    localStorage.setItem(JSON.stringify(newP), JSON.stringify([]))
+    localStorage.setItem(newP.title, JSON.stringify({'tasks':[], 'description':`${newP.description}`}))
 }

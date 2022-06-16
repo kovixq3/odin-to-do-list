@@ -1,6 +1,6 @@
-import { createTask } from "./domAddTask.js";
 import projectFactory from "./projectFactory.js";
 import { storeProject } from "./storage.js";
+import { updateTaskSectionDisplay } from "./domAddTask.js";
 export { createAddProjectBtn, createProject }
 
 function addProject() {
@@ -37,9 +37,9 @@ function addProject() {
     }
 
     function submittingProject() {
-        if (input.value) {
+        if (input.value && !localStorage.getItem(input.value)) {
             const projectsCtner = document.querySelector('.projects-ctner')
-            const newProject = projectFactory(input.value)
+            const newProject = projectFactory(input.value, 'template description')
             projectsCtner.appendChild(createProject(newProject, false))
         }
         cancelAddingProject()
@@ -59,38 +59,26 @@ function createAddProjectBtn() {
 }
 
 function createProject(newProject, domOnly) {
-    // if this is NOT called for creating dom element only, store project
-    if (domOnly !== true) storeProject(newProject)
-
+    // if this is NOT called for creating dom element only, store project 
+    let projectTitle = newProject;
+    if (domOnly !== true) {
+        storeProject(newProject)
+        projectTitle = newProject.title
+    };
 
     const domItem = document.createElement('div');
     domItem.classList.add('item');
-    domItem.textContent = newProject.title;
-
+    domItem.textContent = projectTitle;
     domItem.addEventListener('click', (e) => {
         addSelectedClass(e.target)
-        updateTaskSectionDisplay(e.target)
+        updateTaskSectionDisplay(projectTitle)
     })
 
-
-    function addSelectedClass(i) {
+    function addSelectedClass(n) {
         const projectsCtner = document.querySelector('.projects-ctner')
         const childrenArr = [...projectsCtner.children]
         childrenArr.forEach(e => e.classList.remove('selected'));
-        i.classList.add('selected')
-    }
-
-    function updateTaskSectionDisplay(i) {
-        const selectedProjectTitle = document.querySelector('.selected-project__title')
-        selectedProjectTitle.textContent = i.textContent
-
-        const selectedProjectTasksCtner = document.querySelector('.selected-project__tasks-ctner')
-        while (selectedProjectTasksCtner.firstChild) {
-            selectedProjectTasksCtner.removeChild(selectedProjectTasksCtner.firstChild)
-        }
-
-        const arr = JSON.parse(localStorage.getItem(JSON.stringify(newProject)))
-        arr.forEach(e => createTask(e, true))
+        n.classList.add('selected')
     }
 
     return domItem;

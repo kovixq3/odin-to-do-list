@@ -109,20 +109,30 @@ table {
 
 .selected-project__task {
 	height: 60px;
+	padding: 0 .75rem;
 	border: 1px solid var(--semi-transparent-white);
 	border-radius: .33rem;
 	display: flex;
 	align-items: center;
-	/* temp */
-	justify-content: space-around;
+	/* temp, this is used for add task btn design */
+    justify-content: space-around;
 }
 
 .task--checkbox {
-
 }
 
 .task--title {
+	flex: 3;
+}
+
+.task--date {
 	flex: 1;
+	display: flex;
+	justify-content: center;
+}
+
+.task--edit {
+	cursor: pointer;
 }
 
 .add-task-ctner {

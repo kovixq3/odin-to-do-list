@@ -27,7 +27,7 @@ export function onLoad() {
 
     // loop through projects in local storage and append them to dom
     for (let index = 0; index < localStorage.length; index++) {
-        let item = JSON.parse(localStorage.key(index))
+        let item = localStorage.key(index)
         let domItem = createProject(item, true)
         projectsCtner.appendChild(domItem)
     }
