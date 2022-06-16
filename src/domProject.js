@@ -1,6 +1,6 @@
 import projectFactory from "./projectFactory.js";
-import { storeProject } from "./storage.js";
-import { updateTaskSectionDisplay } from "./domAddTask.js";
+import { projectStorage } from "./storage.js";
+import { updateTaskSectionDisplay } from "./domTask.js";
 export { createAddProjectBtn, createProject }
 
 function addProject() {
@@ -62,7 +62,7 @@ function createProject(newProject, domOnly) {
     // if this is NOT called for creating dom element only, store project 
     let projectTitle = newProject;
     if (domOnly !== true) {
-        storeProject(newProject)
+        projectStorage(newProject)
         projectTitle = newProject.title
     };
 

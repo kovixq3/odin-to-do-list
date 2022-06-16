@@ -82,15 +82,11 @@ function createTask(newTask, domOnly) {
     taskDate.classList.add('task--date');
     taskDate.textContent = formatDistanceToNow(newTask.dueDate, {addSuffix: true});
 
+
     const taskEdit = document.createElement('div');
     taskEdit.classList.add('task--edit');
     taskEdit.textContent = 'Edit'
-    taskEdit.addEventListener('click', (e) => {
-        const spTitle = document.querySelector('.selected').textContent
-        editTask(e.target.parentNode)
-        // expand to allow enter details
-        // interact with LS to apply changes
-    })
+    taskEdit.addEventListener('click', (e) => editTask(e.target.parentNode))
 
 
     task.appendChild(taskCheck);
@@ -114,6 +110,10 @@ function editTask(toReplace) {
     const editDate = document.createElement('input');
     editDate.classList.add('task--date');
     editDate.setAttribute('type', 'date')
+    // take date out from LS because i cant think of a better way for now
+    const selectedTitle = document.querySelector('.selected').textContent;
+    const arr = JSON.parse(localStorage.getItem(selectedTitle)).tasks
+    editDate.value = arr[arr.findIndex((e) => e.title === editTitle.value)].dueDate
 
     const editConfirm = document.createElement('div');
     editConfirm.textContent = 'OK'

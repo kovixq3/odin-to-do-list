@@ -1,5 +1,5 @@
-import { createAddTaskBtn } from "./domAddTask"
-import { createAddProjectBtn, createProject } from "./domAddProject"
+import { createAddTaskBtn } from "./domTask"
+import { createAddProjectBtn, createProject } from "./domProject"
 
 export function onLoad() {
     const body = document.querySelector('body');

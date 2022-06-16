@@ -1,4 +1,4 @@
-export { taskStorage, storeProject }
+export { taskStorage, projectStorage }
 
 function taskStorage(newTask, toReplaceTitle) {
     const selectedTitle = document.querySelector('.selected').textContent;
@@ -14,6 +14,6 @@ function taskStorage(newTask, toReplaceTitle) {
     localStorage.setItem(selectedTitle, JSON.stringify({tasks, description}))
 }
 
-function storeProject(newP) {
-    localStorage.setItem(newP.title, JSON.stringify({'tasks':[], 'description':`${newP.description}`}))
+function projectStorage(newProject) {
+    localStorage.setItem(newProject.title, JSON.stringify({'tasks':[], 'description':`${newProject.description}`}))
 }
