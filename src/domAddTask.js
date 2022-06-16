@@ -38,7 +38,7 @@ function addTask() {
     }
 
     function submittingTask() {
-        const newTask = taskFactory(title.value, date.valueAsDate)
+        const newTask = taskFactory(title.value, date.value)
         createTask(newTask, false)
         cancelAddingTask()
     }
@@ -57,9 +57,11 @@ function createAddTaskBtn() {
 }
 
 function createTask(newTask, domOnly) {
-    // if this is NOT called for creating dom element only, then store task
+    // if this is NOT called for creating dom element only, store task
     if (domOnly !== true) storeTask(newTask)
 
+    // convert date string to date obj
+    newTask.dueDate = new Date(newTask.dueDate)
 
     const task = document.createElement('div');
     task.classList.add('selected-project__task');

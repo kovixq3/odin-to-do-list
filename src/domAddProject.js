@@ -40,7 +40,7 @@ function addProject() {
         if (input.value) {
             const projectsCtner = document.querySelector('.projects-ctner')
             const newProject = projectFactory(input.value)
-            projectsCtner.appendChild(createProject(newProject))
+            projectsCtner.appendChild(createProject(newProject, false))
         }
         cancelAddingProject()
     }
@@ -58,8 +58,9 @@ function createAddProjectBtn() {
     return addProjectBtn;
 }
 
-function createProject(newProject) {
-    if (!localStorage.getItem(newProject.title)) storeProject(newProject)
+function createProject(newProject, domOnly) {
+    // if this is NOT called for creating dom element only, store project
+    if (domOnly !== true) storeProject(newProject)
 
 
     const domItem = document.createElement('div');
@@ -71,7 +72,6 @@ function createProject(newProject) {
         updateTaskSectionDisplay(e.target)
     })
 
-    // update selected-project__tasks-ctner
 
     function addSelectedClass(i) {
         const projectsCtner = document.querySelector('.projects-ctner')
@@ -81,15 +81,16 @@ function createProject(newProject) {
     }
 
     function updateTaskSectionDisplay(i) {
-        // loop through local storage looking for a specific project name (i.textContent)
-        // const arr = JSON.parse(localStorage.getItem(i.textContent))
-        // arr.forEach(e => createTask(e, true))
-
         const selectedProjectTitle = document.querySelector('.selected-project__title')
         selectedProjectTitle.textContent = i.textContent
 
         const selectedProjectTasksCtner = document.querySelector('.selected-project__tasks-ctner')
+        while (selectedProjectTasksCtner.firstChild) {
+            selectedProjectTasksCtner.removeChild(selectedProjectTasksCtner.firstChild)
+        }
 
+        const arr = JSON.parse(localStorage.getItem(JSON.stringify(newProject)))
+        arr.forEach(e => createTask(e, true))
     }
 
     return domItem;
