@@ -1,2 +1,3 @@
 # odin-to-do-list
-#Fairy_dancing_in_lake
+i fucked up
+will rewrite this pile of trash in near future
