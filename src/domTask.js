@@ -1,5 +1,5 @@
 import taskFactory from "./taskFactory";
-import { taskStorage } from "./storage";
+import { taskStorage, taskStorageDelete } from "./storage";
 import { formatDistanceToNow } from 'date-fns'
 export { createAddTaskBtn, updateTaskSectionDisplay }
 
@@ -119,10 +119,15 @@ function editTask(toReplace) {
     editConfirm.textContent = 'OK'
     editConfirm.addEventListener('click', confirm)
 
+    const editDelete = document.createElement('div');
+    editDelete.textContent = 'Delete'
+    editDelete.addEventListener('click', deleteTask)
+
 
     edit.appendChild(editTitle)
     edit.appendChild(editDate)
     edit.appendChild(editConfirm)
+    edit.appendChild(editDelete)
     
     const ctner = document.querySelector('.selected-project__tasks-ctner')
     ctner.replaceChild(edit, toReplace)
@@ -138,6 +143,14 @@ function editTask(toReplace) {
             updateTaskSectionDisplay(selectedTitle)
         }
         return
+    }
+
+    function deleteTask() {
+        const toDeleteTitle = toReplace.querySelector('.task--title').textContent;
+        taskStorageDelete(toDeleteTitle)
+
+        const selectedTitle = document.querySelector('.selected').textContent;
+        updateTaskSectionDisplay(selectedTitle)
     }
 }
 
